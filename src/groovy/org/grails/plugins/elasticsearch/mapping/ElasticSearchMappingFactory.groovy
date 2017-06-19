@@ -71,6 +71,8 @@ class ElasticSearchMappingFactory {
             // Add the custom mapping (searchable static property in domain model)
             propOptions.putAll(scpm.getAttributes())
             String propType = getElasticType(scpm)
+            if (scpm.isDateFormat())
+                propType = 'string'
             if (!scpm.isGeoPoint()) {
                 if (scpm.isComponent()) {
                     // Proceed with nested mapping.

@@ -100,7 +100,7 @@ class SearchableDomainClassMapper extends GroovyObjectSupport {
                 if (superDomainClass == null && Modifier.isAbstract(currentClass.getModifiers())) {
                     // We create a temporary dummy GrailsDomainClass instance for this abstract class
                     superDomainClass = new DefaultGrailsDomainClass(currentClass)
-                } else {
+                } else if (superDomainClass == null){
                     // If superDomainClass is null & not abstract, then we won't process this class
                     break
                 }

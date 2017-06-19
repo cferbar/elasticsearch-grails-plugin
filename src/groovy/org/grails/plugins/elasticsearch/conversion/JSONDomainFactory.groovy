@@ -23,6 +23,7 @@ import org.grails.plugins.elasticsearch.conversion.marshall.*
 import org.grails.plugins.elasticsearch.unwrap.DomainClassUnWrapperChain
 
 import java.beans.PropertyEditor
+import java.text.SimpleDateFormat
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder
 
@@ -150,10 +151,24 @@ class JSONDomainFactory {
         scm.propertiesMapping.each { scpm ->
             marshallingContext.lastParentPropertyName = scpm.propertyName
             def res = delegateMarshalling(instance."${scpm.propertyName}", marshallingContext)
-            json.field(scpm.propertyName, res)
+            if (scpm.isDateFormat() && res != null) {
+                json.field(scpm.propertyName, (new SimpleDateFormat(scpm.getDateFormat()).format(res)))
+            } else {
+                json.field(scpm.propertyName, res)
+            }
             // add the alias
             if (scpm.getAlias()) {
                 json.field(scpm.getAlias(), res)
+            }
+            //expand child with prefix
+            if (scpm.isPrefix()) {
+                if (res.size() > 1) {
+                    res.each { key, value ->
+                        json.field("${scpm.getPrefix() + key}", value)
+                    }
+                } else {
+                    json.field(scpm.getPrefix(), res)
+                }
             }
         }
         marshallingContext.pop()

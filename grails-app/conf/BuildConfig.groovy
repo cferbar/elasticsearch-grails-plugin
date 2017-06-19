@@ -1,14 +1,12 @@
 grails.project.work.dir = 'target'
 grails.project.docs.output.dir = 'docs' // for the gh-pages branch
 
-grails.project.dependency.distribution = {
-    remoteRepository(id: 'snapshots-repo', url: 'http://noams.artifactoryonline.com/noams/grails-elasticsearch-plugin-snapshots/') {
-        authentication username: System.getProperty('DEPLOYER_USERNAME'), password: System.getProperty('DEPLOYER_PASSWORD')
-    }
-    remoteRepository(id: 'rc-repo', url: 'http://noams.artifactoryonline.com/noams/grails-elasticsearch-plugin-rc/') {
-        authentication username: System.getProperty('DEPLOYER_USERNAME'), password: System.getProperty('DEPLOYER_PASSWORD')
-    }
-}
+grails.project.repos.remoto.url="http://192.168.1.12:8081/artifactory/plugins-release-local/"
+grails.project.repos.default="remoto"
+grails.project.repos.remoto.username="admin"
+grails.project.repos.remoto.password="Mdgtnt2017"
+
+
 grails.project.dependency.resolver = 'maven' // or ivy
 grails.project.dependency.resolution = {
 
@@ -16,6 +14,7 @@ grails.project.dependency.resolution = {
     log 'warn'
 
     repositories {
+        mavenRepo "http://192.168.1.12:8081/artifactory/plugins-release-local"
         grailsCentral()
         mavenLocal()
         mavenCentral()
@@ -62,7 +61,7 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        build ':release:3.0.1', ':rest-client-builder:2.0.3', {
+        build ':release:3.1.0.2', ':rest-client-builder:2.1.0', {
             export = false
         }
 

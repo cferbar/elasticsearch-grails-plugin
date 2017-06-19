@@ -34,9 +34,12 @@ import org.slf4j.LoggerFactory
 
 class ElasticsearchGrailsPlugin {
 
+    def group = "org.grails.plugins"
+    def artifactId = "elasticsearch"
+
     private static final Logger LOG = LoggerFactory.getLogger(this)
 
-    def version = '0.1.0'
+    def version = '0.1.7'
     def grailsVersion = '2.2.0 > *'
 
     def loadAfter = ['services', 'mongodb']

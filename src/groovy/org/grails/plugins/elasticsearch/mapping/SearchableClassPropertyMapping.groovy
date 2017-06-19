@@ -26,7 +26,7 @@ class SearchableClassPropertyMapping {
     private static final Set<String> SEARCHABLE_MAPPING_OPTIONS = ['boost', 'index', 'analyzer']
     private static final Set<String> SEARCHABLE_SPECIAL_MAPPING_OPTIONS =
             ['component', 'converter', 'reference', 'excludeFromAll', 'maxDepth', 'multi_field', 'parent', 'geoPoint',
-             'alias', 'dynamic', 'attachment']
+             'alias', 'dynamic', 'attachment', 'prefix', 'dateFormat']
 
     /** Grails attributes of this property */
     private GrailsDomainClassProperty grailsProperty
@@ -215,4 +215,21 @@ class SearchableClassPropertyMapping {
 	String getAlias(){
 		specialMappingAttributes.get('alias')
 	}
+
+
+    boolean isPrefix() {
+        getPrefix()
+    }
+
+    String getPrefix() {
+        specialMappingAttributes.get('prefix')
+    }
+
+    boolean isDateFormat() {
+        getDateFormat()
+    }
+
+    String getDateFormat() {
+        specialMappingAttributes.get('dateFormat')
+    }
 }
